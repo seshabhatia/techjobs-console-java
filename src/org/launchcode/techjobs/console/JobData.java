@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by LaunchCode
- */
 public class JobData {
 
     private static final String DATA_FILE = "resources/job_data.csv";
@@ -54,6 +51,28 @@ public class JobData {
         return allJobs;
     }
 
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {  //iterates through allJobs, creating a Hashmap row for each of the job listings
+
+            ArrayList<String> keys = new ArrayList<>(row.keySet());  //creates an ArrayList - taking in the keys of each row and putting the keys in the ArrayList
+
+            for(String column: keys) {  //iterating through the keys
+                String aValue = row.get(column);
+                //retrieves the column that was iterated through using keys above and grabs the corresponding row. This is assigned to the string aValue variable
+
+                if (aValue.toLowerCase().contains(value.toLowerCase())) {   //if the searched for string is contained within aValue
+                    // if (aValue.equalsIgnoreCase(value)) {
+                    jobs.add(row);  //then add a row to the array
+                }
+            }
+        }
+        return jobs;
+    }
+
     /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
@@ -76,7 +95,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -125,4 +144,6 @@ public class JobData {
         }
     }
 
+    private static class Hashmap<T, T1> {
+    }
 }
